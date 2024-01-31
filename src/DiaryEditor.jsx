@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "./App.css";
+import { DiaryDispatchContext } from "./App";
 
 // 일기 작성기 컴포넌트 정의
-const DiaryEditor = ({ onCreate }) => {
-  useEffect(() => {
-    console.log("DiaryEditor 렌더");
-  });
+const DiaryEditor = () => {
+  const { onCreate } = useContext(DiaryDispatchContext);
 
   // useRef를 사용하여 DOM 요소에 접근하기 위한 참조 생성
   const authorInput = useRef();

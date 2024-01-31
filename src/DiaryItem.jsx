@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
 // DiaryItem 컴포넌트 정의
 const DiaryItem = ({
-  onEdit, // 수정 이벤트 핸들러 함수
-  onRemove, // 삭제 이벤트 핸들러 함수
   id, // 일기 항목의 고유 ID
   author, // 작성자
   content, // 내용
   emotion, // 감정 점수
   created_date, // 작성일
 }) => {
-  useEffect(() => {
-    console.log(`${id}번 째 아이템 렌더`);
-  }, []);
+  const { onRemove, onEdit } = useContext(DiaryDispatchContext);
 
   // 상태 변수 설정: isEdit - 수정 모드인지 여부, setIsEdit - 수정 모드 설정 함수
   const [isEdit, setIsEdit] = useState(false);

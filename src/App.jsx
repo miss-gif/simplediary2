@@ -37,6 +37,7 @@ const reducer = (state, action) => {
 };
 
 export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 const App = () => {
   // getData 함수: 외부 API에서 데이터를 가져와 초기 데이터를 설정하는 비동기 함수
@@ -95,6 +96,10 @@ const App = () => {
     dispatch({ type: "EDIT", targetId, newContent });
   }, []);
 
+  const memoizedDispatches = useMemo(() => {
+    return { onCreate, onRemove, onEdit };
+  }, []);
+
   // useMemo를 사용하여 일기 분석 데이터를 계산하는 함수
   const getDiaryAnalysis = useMemo(() => {
     console.log("일기 분석 시작");
@@ -116,16 +121,18 @@ const App = () => {
 
   return (
     <DiaryStateContext.Provider value={data}>
-      <div className="App">
-        <Lifecycle />
-        <OptimizeTest />
-        <DiaryEditor onCreate={onCreate} />
-        <div>전체 일기 : {data.length}</div>
-        <div>기분 좋은 일기 갯수 : {goodCount}</div>
-        <div>기분 나쁜 일기 갯수 : {badCount}</div>
-        <div>기분 좋은 일기 비율 : {goodRatio}%</div>
-        <DiaryList onEdit={onEdit} onRemove={onRemove} />
-      </div>
+      <DiaryDispatchContext.Provider value={memoizedDispatches}>
+        <div className="App">
+          <Lifecycle />
+          <OptimizeTest />
+          <DiaryEditor />
+          <div>전체 일기 : {data.length}</div>
+          <div>기분 좋은 일기 갯수 : {goodCount}</div>
+          <div>기분 나쁜 일기 갯수 : {badCount}</div>
+          <div>기분 좋은 일기 비율 : {goodRatio}%</div>
+          <DiaryList />
+        </div>
+      </DiaryDispatchContext.Provider>
     </DiaryStateContext.Provider>
   );
 };

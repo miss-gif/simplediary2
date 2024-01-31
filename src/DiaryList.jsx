@@ -3,7 +3,7 @@ import DiaryItem from "./DiaryItem";
 import { DiaryStateContext } from "./App";
 
 // DiaryList 컴포넌트 정의
-const DiaryList = ({ onEdit, onRemove }) => {
+const DiaryList = () => {
   const diaryList = useContext(DiaryStateContext);
   return (
     <div className="DiaryList">
@@ -20,8 +20,6 @@ const DiaryList = ({ onEdit, onRemove }) => {
           <DiaryItem
             key={item.id} // 고유한 키로 각 일기 항목을 식별
             {...item} // 일기 항목의 속성을 모두 DiaryItem으로 전달
-            onEdit={onEdit} // 수정 함수 전달
-            onRemove={onRemove} // 삭제 함수 전달
           />
         ))}
       </div>
